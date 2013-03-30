@@ -12,7 +12,8 @@ public class ClientProxy extends CommonProxy{
    @SideOnly(Side.CLIENT)
    public void registerRenderThings()
    {
-	   MinecraftForgeClient.registerItemRenderer(SaberItems.saber1.itemID, new ItemRender());
+	   MinecraftForgeClient.registerItemRenderer(50, new ItemRender());
+	   System.out.print("Registered Again");
    }
 	
 	

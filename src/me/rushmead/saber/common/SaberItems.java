@@ -23,8 +23,9 @@ public class SaberItems {
         return config.getItem(Configuration.CATEGORY_ITEM, key, defaultID).getInt(defaultID);
     }
 	public static void registerItems(){
-		saber1 = new ItemSaber(saber1ID, EnumToolMaterial.EMERALD);
+		saber1 = new ItemSaber(saber1ID, EnumToolMaterial.EMERALD).setFull3D();
 		GameRegistry.registerItem(saber1, "saber1");
 		LanguageRegistry.addName(saber1, "Mighty Saber");
+		
 	}
 }

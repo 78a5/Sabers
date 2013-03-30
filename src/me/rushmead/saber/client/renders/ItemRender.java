@@ -1,48 +1,91 @@
 package me.rushmead.saber.client.renders;
 
 import me.rushmead.saber.client.models.Saber1Model;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.RenderEngine;
+import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraft.world.storage.MapData;
 import net.minecraftforge.client.IItemRenderer;
 
-import org.lwjgl.opengl.GL11;
 
-public class ItemRender implements IItemRenderer
-{
- private static Saber1Model staffModel = new Saber1Model();
+public class ItemRender extends Render implements IItemRenderer {
+	public Saber1Model model = new Saber1Model();
 
- public boolean handleRenderType(ItemStack item, ItemRenderType type) 
- {
-  if (type == ItemRenderType.EQUIPPED) { return true; }
-  return false;
- }
+	
+	@Override
+	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
+		return true;
+	}
 
- public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) 
- {
-  return false;
- }
+	
+	@Override
+	public void renderItem(ItemRenderType type, ItemStack itemStack, Object... data) {
+		boolean drawIcon = false;
 
- public void renderItem(ItemRenderType type, ItemStack item, Object... data) 
- {
-  switch (type)
-  {
-  case ENTITY: renderTool(-0.5F, 0.5F, -0.5F); break;
-  case EQUIPPED: renderTool(0F, 0.4F, 0F); break;
-  case INVENTORY: renderTool(1F, 0.65F, 1F); break;
-  default: break;
-  }
- }
+		
+		switch (type) {
+		case ENTITY:
+			RenderBlocks renderEntity = (RenderBlocks) data[0];
+			EntityItem entityEntity = (EntityItem) data[1];
 
- private void renderTool(float x, float y, float z) 
- {
-  Tessellator tesselator = Tessellator.instance;
-  GL11.glPushMatrix(); //start
-  GL11.glTranslatef(x, y, z); //size
-  float var10 = 0.0625F;
-  staffModel.render((Entity)null, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, var10);
-  GL11.glPopMatrix(); //end
- }
+			model.render((Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F,
+     0.0625F);
+			break;
+		case INVENTORY:
+			RenderBlocks renderInventory = (RenderBlocks) data[0];
+			
+			break;
+		case EQUIPPED:
+			RenderBlocks renderEquipped = (RenderBlocks) data[0];
+			EntityLiving entityEquipped = (EntityLiving) data[1];
+
+			if (entityEquipped instanceof EntityPlayer) {
+				
+			} else {
+				
+			}
+
+			model.render((Entity) data[1], 0.0625F, 0.0625F, 0.0625F, 0.0625F, 0.0625F,
+     0.0625F);
+			break;
+		case FIRST_PERSON_MAP:
+			EntityPlayer playerFirstPerson = (EntityPlayer) data[0];
+			RenderEngine engineFirstPerson = (RenderEngine) data[1];
+			MapData mapDataFirstPerson = (MapData) data[2];
+			
+
+			
+			break;
+		default:
+		}
+	}
+
+	/**
+	 * Whether or not to use the RenderHelper for this item. Helper can be:
+	 * 
+	 * ENTITY_ROTATION - Isometric rotation, for block items
+	 * 
+	 * ENTITY_BOBBING - Up-and-down bobbing effect for EntityItem
+	 * 
+	 * EQUIPPED_BLOCK - Determines if the currently equipped item should be rendered as a 3D block or as a 2D texture.
+	 * 
+	 * BLOCK_3D - Determines if the item should equate to a block that has RenderBlocks.renderItemIn3d return true
+	 * 
+	 * INVENTORY_BLOCK - Determines if the item should be rendered in GUI inventory slots as a 3D block or as a 2D texture.
+	 */
+	@Override
+	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper) {
+		return type == ItemRenderType.ENTITY;
+	}
+
+	@Override
+	public void doRender(Entity var1, double var2, double var4, double var6, float var8, float var9) {
+
+	}
 
 }
