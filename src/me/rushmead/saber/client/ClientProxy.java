@@ -3,6 +3,7 @@ package me.rushmead.saber.client;
 import me.rushmead.saber.client.renders.ItemRender;
 import me.rushmead.saber.common.CommonProxy;
 import me.rushmead.saber.common.SaberItems;
+import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -12,7 +13,7 @@ public class ClientProxy extends CommonProxy{
    @SideOnly(Side.CLIENT)
    public void registerRenderThings()
    {
-	   MinecraftForgeClient.registerItemRenderer(50, new ItemRender());
+	   MinecraftForgeClient.registerItemRenderer(SaberItems.saber1.itemID, (IItemRenderer)new ItemRender());
 	   System.out.print("Registered Again");
    }
 	

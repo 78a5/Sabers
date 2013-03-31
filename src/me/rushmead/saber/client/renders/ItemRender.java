@@ -1,6 +1,10 @@
 package me.rushmead.saber.client.renders;
 
+import org.lwjgl.opengl.GL11;
+
 import me.rushmead.saber.client.models.Saber1Model;
+import me.rushmead.saber.common.items.ItemSaber;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.RenderEngine;
 import net.minecraft.client.renderer.entity.Render;
@@ -19,50 +23,38 @@ public class ItemRender extends Render implements IItemRenderer {
 	
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
-		return true;
+		switch(type){
+		case EQUIPPED: return true;
+		default: return false;
+		
+		
+		}
 	}
 
 	
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack itemStack, Object... data) {
-		boolean drawIcon = false;
-
-		
-		switch (type) {
-		case ENTITY:
-			RenderBlocks renderEntity = (RenderBlocks) data[0];
-			EntityItem entityEntity = (EntityItem) data[1];
-
-			model.render((Entity) data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F,
-     0.0625F);
-			break;
-		case INVENTORY:
-			RenderBlocks renderInventory = (RenderBlocks) data[0];
-			
-			break;
-		case EQUIPPED:
-			RenderBlocks renderEquipped = (RenderBlocks) data[0];
-			EntityLiving entityEquipped = (EntityLiving) data[1];
-
-			if (entityEquipped instanceof EntityPlayer) {
-				
-			} else {
-				
-			}
-
-			model.render((Entity) data[1], 0.0625F, 0.0625F, 0.0625F, 0.0625F, 0.0625F,
-     0.0625F);
-			break;
-		case FIRST_PERSON_MAP:
-			EntityPlayer playerFirstPerson = (EntityPlayer) data[0];
-			RenderEngine engineFirstPerson = (RenderEngine) data[1];
-			MapData mapDataFirstPerson = (MapData) data[2];
-			
-
-			
-			break;
-		default:
-		}
+              switch(type){
+              case EQUIPPED:
+              {
+            	  GL11.glPushMatrix();
+            	  Minecraft.getMinecraft().renderEngine.bindTexture("/mods/sabermod/textures/items/saber1.png");
+            	  
+            	GL11.glTranslatef(0F, 1F, 0F);
+            	  
+            	  model.render((Entity)data[1], 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+            	  
+            	  
+            	  
+            	  
+            	  
+            	  GL11.glPopMatrix();
+            	  
+            	  
+              }
+              
+              
+              }
 	}
 
 	/**
